@@ -73,5 +73,17 @@ class StringCalculatorTest {
 
     }
 
+    @Nested
+    @DisplayName("Tests for Step 4")
+    class Step4Tests {
+        @ParameterizedTest(name = "{0}")
+        @DisplayName("Custom delimiter tests")
+        @ValueSource(strings = {"//s\\n1,2\\n2s1", "//;\\n1;2,2\\n1", "//*\\n1*2*1*2"})
+        void NewDelimitor(String numbers) {
+            assertEquals(calculatorTest.add(numbers), 6);
+        }
+
+    }
+
 
 }
