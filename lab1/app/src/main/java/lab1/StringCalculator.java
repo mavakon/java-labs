@@ -7,7 +7,6 @@ public class StringCalculator {
         if (numbers.isBlank()) return sum;
 
         String[] numberArray = numbers.split(",");
-        if (numberArray.length > 2) throw new IllegalArgumentException("No more than 2 numbers allowed.");
         for (String x: numberArray) {
             try{
                 sum += Integer.parseInt(x);
