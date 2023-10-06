@@ -5,8 +5,9 @@ public class StringCalculator {
         int sum = 0;
 
         if (numbers.isBlank()) return sum;
+        if (numbers.endsWith(",") || numbers.endsWith("\\n")) throw new IllegalArgumentException("String should not end with a delimitor.");
 
-        String[] numberArray = numbers.split(",");
+        String[] numberArray = numbers.split(",|\\\\n");
         for (String x: numberArray) {
             try{
                 sum += Integer.parseInt(x);

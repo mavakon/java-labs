@@ -54,6 +54,24 @@ class StringCalculatorTest {
             assertEquals(calculatorTest.add(numbers), 10);
         }
     }
+    @Nested
+    @DisplayName("Tests for Step 3")
+    class Step3Tests {
+        @ParameterizedTest(name = "{0}")
+        @DisplayName("\\n as new possible delimiter")
+        @ValueSource(strings = {"1,2\\n3", "1\\n2,3", "1\\n2\\n3"})
+        void NewDelimitor(String numbers) {
+            assertEquals(calculatorTest.add(numbers), 6);
+        }
+        @ParameterizedTest(name = "{0}")
+        @DisplayName("Consecutive delimiters with \\n")
+        @ValueSource(strings = {"1,2,\\n3", "1\\n\\n2,3", ",\\n12,3", "1,\\n"})
+        void DelimitersOrSymbols(String numbers) {
+            assertThrows(IllegalArgumentException.class, () -> calculatorTest.add(numbers));
+        }
+
+
+    }
 
 
 }
