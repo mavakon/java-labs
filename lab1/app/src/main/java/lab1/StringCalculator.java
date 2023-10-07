@@ -28,7 +28,7 @@ public class StringCalculator {
             try{
                 if (Integer.parseInt(x) < 0) {
                     negativeNumbers.add(x);
-                } else {
+                } else if (Integer.parseInt(x) < 1001) {
                     sum += Integer.parseInt(x);
                 }
             }

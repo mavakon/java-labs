@@ -96,5 +96,14 @@ class StringCalculatorTest {
         }
     }
 
-
+    @Nested
+    @DisplayName("Tests for Step 6")
+    class Step6Tests {
+        @ParameterizedTest(name = "{0}")
+        @DisplayName("Ignore numbers bigger than thousand")
+        @ValueSource(strings = {"1000,999,1001", "1500,800,199,999,1", "999,2500,500,500"})
+        void BiggerThanThousand(String numbers) {
+            assertEquals(calculatorTest.add(numbers), 1999);
+        }
+    }
 }
