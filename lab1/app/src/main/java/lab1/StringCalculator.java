@@ -18,8 +18,14 @@ public class StringCalculator {
             Matcher matcher = customDelimPattern.matcher(numbers.substring(2, delimiterEndIndex));
 
             StringBuilder customDelimiters = new StringBuilder();
-            if (matcher.find()) {
-                customDelimiters.append(Pattern.quote(matcher.group(1)));
+            while (matcher.find()) { // Change from if to while to handle multiple delimiters
+                if (!customDelimiters.isEmpty()) {
+                    customDelimiters.append("|");
+                }
+                customDelimiters.append(Pattern.quote(matcher.group(1))); // Quote special characters in delimiter
+            }
+
+            if (!customDelimiters.isEmpty()) {
                 delimiter += "|" + customDelimiters;
             } else {
                 delimiter += "|" + Pattern.quote(numbers.substring(2, delimiterEndIndex));
