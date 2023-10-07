@@ -14,7 +14,17 @@ public class StringCalculator {
         if (numbers.startsWith("//")) {
             int delimiterEndIndex = numbers.indexOf("\\n");
             if (delimiterEndIndex < 0) throw new IllegalArgumentException("Delimiter specification is incorrect.");
-            delimiter += "|" + Pattern.quote(numbers.substring(2, delimiterEndIndex));
+            Pattern customDelimPattern = Pattern.compile("\\[([^]]+)]");
+            Matcher matcher = customDelimPattern.matcher(numbers.substring(2, delimiterEndIndex));
+
+            StringBuilder customDelimiters = new StringBuilder();
+            if (matcher.find()) {
+                customDelimiters.append(Pattern.quote(matcher.group(1)));
+                delimiter += "|" + customDelimiters;
+            } else {
+                delimiter += "|" + Pattern.quote(numbers.substring(2, delimiterEndIndex));
+            }
+
             numbers = numbers.substring(delimiterEndIndex + 2);
         }
 
