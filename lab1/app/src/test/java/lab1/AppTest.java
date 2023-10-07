@@ -85,5 +85,16 @@ class StringCalculatorTest {
 
     }
 
+    @Nested
+    @DisplayName("Tests for Step 5")
+    class Step5Tests {
+        @ParameterizedTest(name = "{0}")
+        @DisplayName("Negative numbers exception")
+        @ValueSource(strings = {"-5,-2,-3,-1", "5,2,3,-1,23", "-2,4,51,-3,-2"})
+        void NegativeException(String numbers) {
+            assertThrows(IllegalArgumentException.class, () -> calculatorTest.add(numbers));
+        }
+    }
+
 
 }

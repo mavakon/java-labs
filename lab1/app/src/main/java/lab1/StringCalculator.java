@@ -1,5 +1,6 @@
 package lab1;
 
+import java.util.ArrayList;
 import java.util.regex.*;
 
 public class StringCalculator {
@@ -21,16 +22,26 @@ public class StringCalculator {
             throw new IllegalArgumentException("Consecutive delimiters found.");
         }
 
+        ArrayList<String> negativeNumbers = new ArrayList<>();
         String[] numberArray = numbers.split(delimiter);
         for (String x: numberArray) {
             try{
-                sum += Integer.parseInt(x);
+                if (Integer.parseInt(x) < 0) {
+                    negativeNumbers.add(x);
+                } else {
+                    sum += Integer.parseInt(x);
+                }
             }
             catch (NumberFormatException e) {
                 throw new IllegalArgumentException("String contains symbols other than delimiters or integers.\n" +
                         " OR it has consecutive delimiters.");
             }
         }
-       return sum;
+        if (negativeNumbers.isEmpty()){
+            return sum;
+        }
+        else {
+            throw new IllegalArgumentException("Negative numbers are not allowed: " + String.join(", ", negativeNumbers));
+        }
    }
 }
