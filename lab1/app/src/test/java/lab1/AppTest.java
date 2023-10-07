@@ -126,4 +126,14 @@ class StringCalculatorTest {
             assertEquals(calculatorTest.add(numbers), 6);
         }
     }
+    @Nested
+    @DisplayName("Tests for Step 9")
+    class Step9Tests {
+        @ParameterizedTest(name = "{0}")
+        @DisplayName("Multiple custom delimiters with different length")
+        @ValueSource(strings = {"//[**][-]\\n1**2-3", "//[;;][***][/]\\n1,2;;3***"})
+        void BiggerThanThousand(String numbers) {
+            assertEquals(calculatorTest.add(numbers), 6);
+        }
+    }
 }
