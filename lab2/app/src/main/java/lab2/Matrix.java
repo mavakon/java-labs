@@ -65,5 +65,48 @@ public class Matrix {
         }
     }
 
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public double[][] getData() {
+        return data;
+    }
+
+    // Отримання елемента за індексами
+    public double getElement(int row, int col) {
+        if (row >= 0 && row < rows && col >= 0 && col < cols) {
+            return data[row][col];
+        } else {
+            throw new IndexOutOfBoundsException("Індекс виходить за межі розмірів матриці");
+        }
+    }
+
+    // Отримання рядка за індексом
+    public double[] getRow(int row) {
+        if (row >= 0 && row < rows) {
+            return data[row].clone(); // повертаємо копію рядка, щоб не змінювали зовнішнім чином матрицю
+        } else {
+            throw new IndexOutOfBoundsException("Індекс виходить за межі розмірів матриці");
+        }
+    }
+
+    // Отримання стовпця за індексом
+    public double[] getCol(int col) {
+        if (col >= 0 && col < cols) {
+            double[] column = new double[rows];
+            for (int i = 0; i < rows; i++) {
+                column[i] = data[i][col];
+            }
+            return column;
+        } else {
+            throw new IndexOutOfBoundsException("Індекс виходить за межі розмірів матриці");
+        }
+    }
+
 }
 
