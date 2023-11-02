@@ -1,5 +1,7 @@
 package lab2;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class Matrix {
@@ -47,7 +49,7 @@ public class Matrix {
         if (row >= 0 && row < rows && col >= 0 && col < cols) {
             data[row][col] = value;
         } else {
-            throw new IndexOutOfBoundsException("Індекс виходить за межі розмірів матриці");
+            throw new IndexOutOfBoundsException("Індекс виходить за розмірність матриці");
         }
     }
 
@@ -82,16 +84,16 @@ public class Matrix {
         if (row >= 0 && row < rows && col >= 0 && col < cols) {
             return data[row][col];
         } else {
-            throw new IndexOutOfBoundsException("Індекс виходить за межі розмірів матриці");
+            throw new IndexOutOfBoundsException("Індекс виходить за розмірність матриці");
         }
     }
 
     // Отримання рядка за індексом
     public double[] getRow(int row) {
         if (row >= 0 && row < rows) {
-            return data[row].clone(); // повертаємо копію рядка, щоб не змінювали зовнішнім чином матрицю
+            return data[row].clone(); // повертаємо копію рядка, щоб не змінювати елементи матриці
         } else {
-            throw new IndexOutOfBoundsException("Індекс виходить за межі розмірів матриці");
+            throw new IndexOutOfBoundsException("Індекс виходить за розмірність матриці");
         }
     }
 
@@ -104,7 +106,7 @@ public class Matrix {
             }
             return column;
         } else {
-            throw new IndexOutOfBoundsException("Індекс виходить за межі розмірів матриці");
+            throw new IndexOutOfBoundsException("Індекс виходить за розмірність матриці");
         }
     }
 
@@ -113,5 +115,19 @@ public class Matrix {
         return rows + "x" + cols;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Matrix matrix = (Matrix) o;
+        return rows == matrix.rows && cols == matrix.cols && Arrays.deepEquals(data, matrix.data);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(rows, cols);
+        result = (69 * result) + Arrays.deepHashCode(data);
+        return result;
+    }
 }
 
