@@ -108,5 +108,10 @@ public class Matrix {
         }
     }
 
+    // Отримання розмірності матриці
+    public String getDimensions() {
+        return rows + "x" + cols;
+    }
+
 }
 

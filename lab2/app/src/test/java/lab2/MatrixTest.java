@@ -56,4 +56,10 @@ class MatrixTest {
         assertArrayEquals(new double[]{2.0, 5.0, 8.0}, matrix.getCol(1));
         assertThrows(IndexOutOfBoundsException.class, () -> matrix.getCol(3));
     }
+    @Test
+    void testGetSize() {
+        Matrix matrix = new Matrix(6, 7);
+        assertEquals("6x7", matrix.getDimensions());
+    }
+
 }
