@@ -1,5 +1,7 @@
 package lab2;
 
+import java.util.Random;
+
 public class Matrix {
     private int rows;
     private int cols;
@@ -27,6 +29,39 @@ public class Matrix {
 
         for (int i = 0; i < rows; i++) {
             System.arraycopy(matrix.data[i], 0, this.data[i], 0, cols);
+        }
+    }
+
+    // Заповнення матриці випадковими числами від a до b
+    public void fillRandom(double a, double b) {
+        Random random = new Random();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                data[i][j] = a + (b - a) * random.nextDouble();
+            }
+        }
+    }
+
+    // Встановлення значення елемента за індексом
+    public void setElement(int row, int col, double value) {
+        if (row >= 0 && row < rows && col >= 0 && col < cols) {
+            data[row][col] = value;
+        } else {
+            throw new IndexOutOfBoundsException("Індекс виходить за межі розмірів матриці");
+        }
+    }
+
+    // Встановлення значень елементів матриці двовимірним масивом
+    public void setData(double[][] data) {
+        if (data.length == rows && data[0].length == cols) {
+            for (int i = 0; i < rows; i++) {
+                if (data[i].length != cols) {
+                    throw new IllegalArgumentException("Розміри вхідного масиву не відповідають розмірам матриці");
+                }
+                System.arraycopy(data[i], 0, this.data[i], 0, cols);
+            }
+        } else {
+            throw new IllegalArgumentException("Розміри вхідного масиву не відповідають розмірам матриці");
         }
     }
 
