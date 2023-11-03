@@ -11,4 +11,5 @@ public interface MatrixInt {
     MatrixInt add(MatrixInt toAdd);
     MatrixInt multiply(double multiplier);
     MatrixInt multiply(MatrixInt matrix);
+    MatrixInt transpose();
 }

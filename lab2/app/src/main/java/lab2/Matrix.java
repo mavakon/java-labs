@@ -198,5 +198,15 @@ public class Matrix implements MatrixInt {
         return new Matrix(resultData);
     }
 
+    public Matrix transpose() {
+        double[][] transposedData = new double[this.cols][this.rows];
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                transposedData[j][i] = this.data[i][j];
+            }
+        }
+        return new Matrix(transposedData);
+    }
+
 }
 

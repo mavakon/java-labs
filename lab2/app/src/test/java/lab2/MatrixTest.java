@@ -182,7 +182,7 @@ class MatrixTest {
     }
 
     @Test
-    void testImmutableMultiplyMatricesInvalidSize() {
+    void testMultiplyMatricesInvalidSize() {
         Matrix matrix1 = new Matrix(new double[][]{
                 {26, 12},
                 {17, 10}
@@ -220,7 +220,7 @@ class MatrixTest {
     }
 
     @Test
-    void testMultiplyMatricesInvalidSize() {
+    void testImmutableMultiplyMatricesInvalidSize() {
         ImmutableMatrix matrix1 = new ImmutableMatrix(new double[][]{
                 {26, 12},
                 {17, 10}
@@ -235,5 +235,42 @@ class MatrixTest {
         assertThrows(IllegalArgumentException.class, () -> matrix1.multiply(matrix2));
     }
 
+    @Test
+    void testTranspose() {
+        Matrix original = new Matrix(new double[][]{
+                {1, 2, 3, 7},
+                {5, 2, 8, 1}
+
+        });
+
+        Matrix transposed = original.transpose();
+        Matrix expected = new Matrix(new double[][]{
+                {1, 5},
+                {2, 2},
+                {3, 8},
+                {7, 1}
+        });
+
+        assertEquals(expected, transposed);
+    }
+
+    @Test
+    void testImmutableTranspose() {
+        ImmutableMatrix original = new ImmutableMatrix(new double[][]{
+                {1, 2, 3, 7},
+                {5, 2, 8, 1}
+
+        });
+
+        ImmutableMatrix transposed = original.transpose();
+        ImmutableMatrix expected = new ImmutableMatrix(new double[][]{
+                {1, 5},
+                {2, 2},
+                {3, 8},
+                {7, 1}
+        });
+
+        assertEquals(expected, transposed);
+    }
 
 }
