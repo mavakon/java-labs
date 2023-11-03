@@ -10,5 +10,5 @@ public interface MatrixInt {
     String getDimensions();
     MatrixInt add(MatrixInt toAdd);
     MatrixInt multiply(double multiplier);
-
+    MatrixInt multiply(MatrixInt matrix);
 }

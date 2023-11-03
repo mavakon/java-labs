@@ -147,6 +147,21 @@ public final class ImmutableMatrix implements MatrixInt {
         return new ImmutableMatrix(newData);
     }
 
-
+    @Override
+    public ImmutableMatrix multiply(MatrixInt matrix) {
+        if (this.cols != matrix.getRows()) {
+            throw new IllegalArgumentException("Кількість стовпців першої матриці повинна дорівнювати " +
+                    "кількості рядків другої матриці для множення.");
+        }
+        double[][] resultData = new double[this.rows][matrix.getCols()];
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < matrix.getCols(); j++) {
+                for (int k = 0; k < this.cols; k++) {
+                    resultData[i][j] += this.data[i][k] * matrix.getElement(k, j);
+                }
+            }
+        }
+        return new ImmutableMatrix(resultData);
+    }
 
 }

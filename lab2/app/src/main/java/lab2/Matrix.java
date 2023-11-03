@@ -5,9 +5,9 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Matrix implements MatrixInt {
-    private int rows;
-    private int cols;
-    private double[][] data;
+    private final int rows;
+    private final int cols;
+    private final double[][] data;
 
     // Пуста матриця
     public Matrix() {
@@ -103,9 +103,9 @@ public class Matrix implements MatrixInt {
     }
 
     // Отримання елемента за індексами
-    public double getElement(int row, int col) {
-        if (row >= 0 && row < rows && col >= 0 && col < cols) {
-            return data[row][col];
+    public double getElement(int rowIndex, int colIndex) {
+        if (rowIndex >= 0 && rowIndex < rows && colIndex >= 0 && colIndex < cols) {
+            return data[rowIndex][colIndex];
         } else {
             throw new IndexOutOfBoundsException("Індекс виходить за розмірність матриці");
         }
@@ -179,6 +179,23 @@ public class Matrix implements MatrixInt {
             }
         }
         return result;
+    }
+
+    @Override
+    public Matrix multiply(MatrixInt matrix) {
+        if (this.cols != matrix.getRows()) {
+            throw new IllegalArgumentException("Кількість стовпців першої матриці повинна дорівнювати " +
+                    "кількості рядків другої матриці для множення.");
+        }
+        double[][] resultData = new double[this.rows][matrix.getCols()];
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < matrix.getCols(); j++) {
+                for (int k = 0; k < this.cols; k++) {
+                    resultData[i][j] += this.data[i][k] * matrix.getElement(k, j);
+                }
+            }
+        }
+        return new Matrix(resultData);
     }
 
 }

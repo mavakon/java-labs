@@ -11,7 +11,7 @@ class MatrixTest {
         matrix.fillRandom(-100.0, 100.0);
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                assertTrue(matrix.getData()[i][j] >= -100.0 && matrix.getData()[i][j] <= 100.0);
+                assertTrue(matrix.getElement(i, j) >= -100.0 && matrix.getElement(i, j) <= 100.0);
             }
         }
     }
@@ -20,7 +20,7 @@ class MatrixTest {
     void testSetElement() {
         Matrix matrix = new Matrix(6, 6);
         matrix.setElement(2, 5, 32.456);
-        assertEquals(32.456, matrix.getData()[2][5]);
+        assertEquals(32.456, matrix.getElement(2, 5));
     }
 
     @Test
@@ -41,18 +41,14 @@ class MatrixTest {
 
     @Test
     void testGetRow() {
-        Matrix matrix = new Matrix(3, 3);
-        double[][] data = {{123.4, 234.5, 345.6}, {456.7, 567.8, 678.9}, {789.0, 890.1, 901.2}};
-        matrix.setData(data);
+        Matrix matrix = new Matrix(new double[][] {{123.4, 234.5, 345.6}, {456.7, 567.8, 678.9}, {789.0, 890.1, 901.2}});
         assertArrayEquals(new double[]{456.7, 567.8, 678.9}, matrix.getRow(1));
         assertThrows(IndexOutOfBoundsException.class, () -> matrix.getRow(3));
     }
 
     @Test
     void testGetCol() {
-        Matrix matrix = new Matrix(3, 3);
-        double[][] data = {{123.4, 234.5, 345.6}, {456.7, 567.8, 678.9}, {789.0, 890.1, 901.2}};
-        matrix.setData(data);
+        Matrix matrix = new Matrix(new double[][] {{123.4, 234.5, 345.6}, {456.7, 567.8, 678.9}, {789.0, 890.1, 901.2}});
         assertArrayEquals(new double[]{234.5, 567.8, 890.1}, matrix.getCol(1));
         assertThrows(IndexOutOfBoundsException.class, () -> matrix.getCol(3));
     }
@@ -138,7 +134,7 @@ class MatrixTest {
         ImmutableMatrix expected = new ImmutableMatrix(new double[][]{{691.2, 913.4}, {1134.6, 1346.8}});
         ImmutableMatrix result = imMatrix1.add(imMatrix2);
 
-        double delta = 0.0001; // Acceptable delta for floating-point comparisons
+        double delta = 0.0001;
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
@@ -162,5 +158,82 @@ class MatrixTest {
         ImmutableMatrix imMatrix2 = new ImmutableMatrix(3, 3);
         assertThrows(IllegalArgumentException.class, () -> imMatrix1.add(imMatrix2));
     }
+
+    @Test
+    void testMultiplyMatrices() {
+        Matrix matrix1 = new Matrix(new double[][]{
+                {1, 5},
+                {2, 3},
+                {1, 7}
+        });
+
+        Matrix matrix2 = new Matrix(new double[][]{
+                {1, 2, 3, 7},
+                {5, 2, 8, 1}
+        });
+
+        Matrix expected = new Matrix(new double[][]{
+                {26, 12, 43, 12},
+                {17, 10, 30, 17},
+                {36, 16, 59, 14}
+        });
+
+        assertEquals(expected, matrix1.multiply(matrix2));
+    }
+
+    @Test
+    void testImmutableMultiplyMatricesInvalidSize() {
+        Matrix matrix1 = new Matrix(new double[][]{
+                {26, 12},
+                {17, 10}
+        });
+
+        Matrix matrix2 = new Matrix(new double[][]{
+                {12},
+                {17},
+                {14}
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> matrix1.multiply(matrix2));
+    }
+
+    @Test
+    void testImmutableMultiplyMatrices() {
+        ImmutableMatrix matrix1 = new ImmutableMatrix(new double[][]{
+                {1, 5},
+                {2, 3},
+                {1, 7}
+        });
+
+        ImmutableMatrix matrix2 = new ImmutableMatrix(new double[][]{
+                {1, 2, 3, 7},
+                {5, 2, 8, 1}
+        });
+
+        ImmutableMatrix expected = new ImmutableMatrix(new double[][]{
+                {26, 12, 43, 12},
+                {17, 10, 30, 17},
+                {36, 16, 59, 14}
+        });
+
+        assertEquals(expected, matrix1.multiply(matrix2));
+    }
+
+    @Test
+    void testMultiplyMatricesInvalidSize() {
+        ImmutableMatrix matrix1 = new ImmutableMatrix(new double[][]{
+                {26, 12},
+                {17, 10}
+        });
+
+        ImmutableMatrix matrix2 = new ImmutableMatrix(new double[][]{
+                {12},
+                {17},
+                {14}
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> matrix1.multiply(matrix2));
+    }
+
 
 }
