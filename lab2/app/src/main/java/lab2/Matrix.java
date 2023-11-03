@@ -208,5 +208,13 @@ public class Matrix implements MatrixInt {
         return new Matrix(transposedData);
     }
 
+    public static Matrix makeDiagonalMatrix(double[] vector) {
+        double[][] data = new double[vector.length][vector.length];
+        for (int i = 0; i < vector.length; i++) {
+            data[i][i] = vector[i];
+        }
+        return new Matrix(data);
+    }
+
 }
 

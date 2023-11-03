@@ -174,4 +174,12 @@ public final class ImmutableMatrix implements MatrixInt {
         return new ImmutableMatrix(transposedData);
     }
 
+    public static ImmutableMatrix makeDiagonalMatrix(double[] vector) {
+        double[][] data = new double[vector.length][vector.length];
+        for (int i = 0; i < vector.length; i++) {
+            data[i][i] = vector[i];
+        }
+        return new ImmutableMatrix(data);
+    }
+
 }

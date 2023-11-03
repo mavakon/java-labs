@@ -273,4 +273,40 @@ class MatrixTest {
         assertEquals(expected, transposed);
     }
 
+    @Test
+    void testMakeDiagonalMatrix() {
+        double[] vector = {5, 2, 8};
+        Matrix diagonalMatrix = Matrix.makeDiagonalMatrix(vector);
+
+        for (int i = 0; i < vector.length; i++) {
+            assertEquals(vector[i], diagonalMatrix.getElement(i, i));
+        }
+
+        for (int i = 0; i < diagonalMatrix.getRows(); i++) {
+            for (int j = 0; j < diagonalMatrix.getCols(); j++) {
+                if (i != j) {
+                    assertEquals(0.0, diagonalMatrix.getElement(i, j));
+                }
+            }
+        }
+    }
+
+    @Test
+    void testMakeDiagonalImmutableMatrix() {
+        double[] vector = {5, 2, 8};
+        ImmutableMatrix diagonalMatrix = ImmutableMatrix.makeDiagonalMatrix(vector);
+
+        for (int i = 0; i < vector.length; i++) {
+            assertEquals(vector[i], diagonalMatrix.getElement(i, i));
+        }
+
+        for (int i = 0; i < diagonalMatrix.getRows(); i++) {
+            for (int j = 0; j < diagonalMatrix.getCols(); j++) {
+                if (i != j) {
+                    assertEquals(0.0, diagonalMatrix.getElement(i, j));
+                }
+            }
+        }
+    }
+
 }
