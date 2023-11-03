@@ -190,4 +190,7 @@ public final class ImmutableMatrix implements MatrixInt {
         return new ImmutableMatrix(data);
     }
 
+    public static ImmutableMatrix makeRandomRowMatrix(int size, double lowerLimit, double upperLimit) {
+        return new ImmutableMatrix(Matrix.makeRandomRowMatrix(size, lowerLimit, upperLimit));
+    }
 }

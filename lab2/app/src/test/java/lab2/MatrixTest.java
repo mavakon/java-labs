@@ -344,5 +344,30 @@ class MatrixTest {
             }
         }
     }
+    @Test
+    void testMakeRandomRowMatrix() {
+        Matrix randomRowMatrix = Matrix.makeRandomRowMatrix(5, -10.0, 10.0);
+
+        assertEquals(5, randomRowMatrix.getCols());
+        assertEquals(1, randomRowMatrix.getRows());
+
+        for (int j = 0; j < 5; j++) {
+            assertTrue(randomRowMatrix.getElement(0, j) >= -10.0 && randomRowMatrix.getElement(0, j) <= 10.0);
+        }
+
+    }
+
+    @Test
+    void testImmutableMakeRandomRowMatrix() {
+        ImmutableMatrix randomRowMatrix = ImmutableMatrix.makeRandomRowMatrix(5, -10.0, 10.0);
+
+        assertEquals(5, randomRowMatrix.getCols());
+        assertEquals(1, randomRowMatrix.getRows());
+
+        for (int j = 0; j < 5; j++) {
+            assertTrue(randomRowMatrix.getElement(0, j) >= -10.0 && randomRowMatrix.getElement(0, j) <= 10.0);
+        }
+
+    }
 
 }
