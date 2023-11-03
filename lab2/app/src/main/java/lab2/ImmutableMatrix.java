@@ -182,4 +182,12 @@ public final class ImmutableMatrix implements MatrixInt {
         return new ImmutableMatrix(data);
     }
 
+    public static ImmutableMatrix makeIdentityMatrix(int size) {
+        double[][] data = new double[size][size];
+        for (int i = 0; i < size; i++) {
+            data[i][i] = 1.0;
+        }
+        return new ImmutableMatrix(data);
+    }
+
 }

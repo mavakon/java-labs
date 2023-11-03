@@ -216,5 +216,13 @@ public class Matrix implements MatrixInt {
         return new Matrix(data);
     }
 
+    public static Matrix makeIdentityMatrix(int size) {
+        double[][] data = new double[size][size];
+        for (int i = 0; i < size; i++) {
+            data[i][i] = 1;
+        }
+        return new Matrix(data);
+    }
+
 }
 

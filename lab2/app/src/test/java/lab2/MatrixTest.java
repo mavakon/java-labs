@@ -292,7 +292,7 @@ class MatrixTest {
     }
 
     @Test
-    void testMakeDiagonalImmutableMatrix() {
+    void testImmutableMakeDiagonalMatrix() {
         double[] vector = {5, 2, 8};
         ImmutableMatrix diagonalMatrix = ImmutableMatrix.makeDiagonalMatrix(vector);
 
@@ -304,6 +304,42 @@ class MatrixTest {
             for (int j = 0; j < diagonalMatrix.getCols(); j++) {
                 if (i != j) {
                     assertEquals(0.0, diagonalMatrix.getElement(i, j));
+                }
+            }
+        }
+    }
+
+    @Test
+    void testMakeIdentityMatrix() {
+        int size = 5;
+       Matrix identityMatrix = Matrix.makeIdentityMatrix(size);
+
+        for (int i = 0; i < size; i++) {
+            assertEquals(1.0, identityMatrix.getElement(i, i));
+        }
+
+        for (int i = 0; i < identityMatrix.getRows(); i++) {
+            for (int j = 0; j < identityMatrix.getCols(); j++) {
+                if (i != j) {
+                    assertEquals(0.0, identityMatrix.getElement(i, j));
+                }
+            }
+        }
+    }
+
+    @Test
+    void testImmutableMakeIdentityMatrix() {
+        int size = 5;
+        ImmutableMatrix identityMatrix = ImmutableMatrix.makeIdentityMatrix(size);
+
+        for (int i = 0; i < size; i++) {
+            assertEquals(1.0, identityMatrix.getElement(i, i));
+        }
+
+        for (int i = 0; i < identityMatrix.getRows(); i++) {
+            for (int j = 0; j < identityMatrix.getCols(); j++) {
+                if (i != j) {
+                    assertEquals(0.0, identityMatrix.getElement(i, j));
                 }
             }
         }
