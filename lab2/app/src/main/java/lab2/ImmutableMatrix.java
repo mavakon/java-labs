@@ -32,7 +32,7 @@ public final class ImmutableMatrix implements MatrixInt {
         this.data = new double[rows][cols];
         for (int i = 0; i < rows; i++) {
             if (data[i].length != cols) {
-                throw new IllegalArgumentException("Стовпичики різних розмірів.");
+                throw new IllegalArgumentException("Стовпчики різних розмірів.");
             }
             System.arraycopy(data[i], 0, this.data[i], 0, cols);
         }
@@ -118,5 +118,35 @@ public final class ImmutableMatrix implements MatrixInt {
         result = 70 * result + Arrays.deepHashCode(data);
         return result;
     }
+
+    // Додавання матриць
+    @Override
+    public ImmutableMatrix add(MatrixInt toAdd) {
+        if (this.rows != toAdd.getRows() || this.cols != toAdd.getCols()) {
+            throw new IllegalArgumentException("Розміри матриць повинні співпадати.");
+        }
+
+        double[][] newData = new double[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                newData[i][j] = this.data[i][j] + toAdd.getElement(i, j);
+            }
+        }
+        return new ImmutableMatrix(newData);
+    }
+
+    // Множення на скаляр
+    @Override
+    public ImmutableMatrix multiply(double multiplier) {
+        double[][] newData = new double[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                newData[i][j] = this.data[i][j] * multiplier;
+            }
+        }
+        return new ImmutableMatrix(newData);
+    }
+
+
 
 }

@@ -37,6 +37,22 @@ public class Matrix implements MatrixInt {
         }
     }
 
+    // Матриця з двовимірного масиву
+    public Matrix(double[][] data) {
+        if (data == null || data.length == 0 || data[0].length == 0) {
+            throw new IllegalArgumentException("Пустий масив.");
+        }
+        this.rows = data.length;
+        this.cols = data[0].length;
+        this.data = new double[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            if (data[i].length != cols) {
+                throw new IllegalArgumentException("Стовпчики різних розмірів.");
+            }
+            System.arraycopy(data[i], 0, this.data[i], 0, cols);
+        }
+    }
+
     // Заповнення матриці випадковими числами від a до b
     public void fillRandom(double a, double b) {
         Random random = new Random();
@@ -136,5 +152,34 @@ public class Matrix implements MatrixInt {
         result = (69 * result) + Arrays.deepHashCode(data);
         return result;
     }
+
+    // Додавання матриць
+    @Override
+    public Matrix add(MatrixInt toAdd) {
+        if (this.rows != toAdd.getRows() || this.cols != toAdd.getCols()) {
+            throw new IllegalArgumentException("Розміри матриць повинні співпадати.");
+        }
+
+        Matrix result = new Matrix(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result.data[i][j] = this.data[i][j] + toAdd.getElement(i, j);
+            }
+        }
+        return result;
+    }
+
+    // Множення на скаляр
+    @Override
+    public Matrix multiply(double multiplier) {
+        Matrix result = new Matrix(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result.data[i][j] = this.data[i][j] * multiplier;
+            }
+        }
+        return result;
+    }
+
 }
 

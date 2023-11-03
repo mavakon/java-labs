@@ -100,5 +100,67 @@ class MatrixTest {
 
 
     }
+    @Test
+    void testAdd() {
+        Matrix matrix1 = new Matrix(new double[][]{{123.4, 234.5}, {345.6, 456.7}});
+        Matrix matrix2 = new Matrix(new double[][]{{567.8, 678.9}, {789.0, 890.1}});
+        Matrix expected = new Matrix(new double[][]{{691.2, 913.4}, {1134.6, 1346.8}});
+        Matrix result = matrix1.add(matrix2);
+        double delta = 0.0001;
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                assertEquals(expected.getElement(i, j), result.getElement(i, j), delta);
+            }
+        }
+    }
+
+    @Test
+    void testMultiply() {
+        Matrix matrix = new Matrix(new double[][]{{123.4, 234.5}, {345.6, 456.7}});
+        double multiplier = 2.0;
+        Matrix expected = new Matrix(new double[][]{{246.8, 469.0}, {691.2, 913.4}});
+        Matrix result = matrix.multiply(multiplier);
+        assertArrayEquals(expected.getData(), result.getData());
+    }
+
+    @Test
+    void testAddWithIncompatibleSizes() {
+        Matrix matrix1 = new Matrix(2, 2);
+        Matrix matrix2 = new Matrix(3, 3);
+        assertThrows(IllegalArgumentException.class, () -> matrix1.add(matrix2));
+    }
+
+    @Test
+    void testImmutableAdd() {
+        ImmutableMatrix imMatrix1 = new ImmutableMatrix(new double[][]{{123.4, 234.5}, {345.6, 456.7}});
+        ImmutableMatrix imMatrix2 = new ImmutableMatrix(new double[][]{{567.8, 678.9}, {789.0, 890.1}});
+        ImmutableMatrix expected = new ImmutableMatrix(new double[][]{{691.2, 913.4}, {1134.6, 1346.8}});
+        ImmutableMatrix result = imMatrix1.add(imMatrix2);
+
+        double delta = 0.0001; // Acceptable delta for floating-point comparisons
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                assertEquals(expected.getElement(i, j), result.getElement(i, j), delta);
+            }
+        }
+    }
+
+    @Test
+    void testImmutableMultiply() {
+        ImmutableMatrix imMatrix = new ImmutableMatrix(new double[][]{{123.4, 234.5}, {345.6, 456.7}});
+        double multiplier = 2.0;
+        ImmutableMatrix expected = new ImmutableMatrix(new double[][]{{246.8, 469.0}, {691.2, 913.4}});
+        ImmutableMatrix result = imMatrix.multiply(multiplier);
+        assertArrayEquals(expected.getData(), result.getData());
+    }
+
+    @Test
+    void testImmutableAddWithIncompatibleSizes() {
+        ImmutableMatrix imMatrix1 = new ImmutableMatrix(2, 2);
+        ImmutableMatrix imMatrix2 = new ImmutableMatrix(3, 3);
+        assertThrows(IllegalArgumentException.class, () -> imMatrix1.add(imMatrix2));
+    }
 
 }

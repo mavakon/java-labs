@@ -8,4 +8,7 @@ public interface MatrixInt {
     double[] getRow(int row);
     double[] getCol(int col);
     String getDimensions();
+    MatrixInt add(MatrixInt toAdd);
+    MatrixInt multiply(double multiplier);
+
 }
