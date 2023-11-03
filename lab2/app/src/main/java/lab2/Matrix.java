@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
-public class Matrix {
+public class Matrix implements MatrixInt {
     private int rows;
     private int cols;
     private double[][] data;
@@ -24,13 +24,16 @@ public class Matrix {
     }
 
     // Копія іншої матриці
-    public Matrix(Matrix matrix) {
-        this.rows = matrix.rows;
-        this.cols = matrix.cols;
+    public Matrix(MatrixInt matrix) {
+        if (matrix == null) {
+            throw new IllegalArgumentException("Матриця не може бути null.");
+        }
+        this.rows = matrix.getRows();
+        this.cols = matrix.getCols();
         this.data = new double[rows][cols];
-
+        double[][] matrixData = matrix.getData();
         for (int i = 0; i < rows; i++) {
-            System.arraycopy(matrix.data[i], 0, this.data[i], 0, cols);
+            System.arraycopy(matrixData[i], 0, this.data[i], 0, cols);
         }
     }
 
@@ -76,7 +79,11 @@ public class Matrix {
     }
 
     public double[][] getData() {
-        return data;
+        double[][] copy = new double[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(data[i], 0, copy[i], 0, cols);
+        }
+        return copy;
     }
 
     // Отримання елемента за індексами

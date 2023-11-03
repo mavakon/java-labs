@@ -75,4 +75,30 @@ class MatrixTest {
 
     }
 
+    @Test
+    void testImmutableMatrixFromData() {
+        double[][] testData = {{123.4, 234.5, 345.6}, {456.7, 567.8, 678.9}};
+        ImmutableMatrix immutableMatrix = new ImmutableMatrix(testData);
+
+        testData[0][0] = 789.0;
+
+        assertEquals(123.4, immutableMatrix.getElement(0, 0));
+    }
+
+    @Test
+    void testImmutableMatrixFromMatrix() {
+        double[][] testData = {{123.4, 234.5, 345.6}, {456.7, 567.8, 678.9}};
+
+        Matrix matrix = new Matrix(2, 3);
+        matrix.setData(testData);
+
+        ImmutableMatrix immutableMatrix = new ImmutableMatrix(matrix);
+
+        matrix.setElement(0, 0, 789.0);
+
+        assertEquals(123.4, immutableMatrix.getElement(0, 0));
+
+
+    }
+
 }
