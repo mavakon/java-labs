@@ -396,4 +396,31 @@ class MatrixTest {
 
     }
 
+    @Test
+    void testInverse() {
+        double[][] data = {
+                {1, 1, 2},
+                {1, 2, 1},
+                {2, 1, 1}
+        };
+        Matrix matrix = new Matrix(data);
+        Matrix inversedMatrix = matrix.inverse();
+
+        double[][] expectedData = {
+                {-0.25, -0.25, 0.75},
+                {-0.25, 0.75, -0.25},
+                {0.75, -0.25, -0.25}
+        };
+        Matrix expectedMatrix = new Matrix(expectedData);
+
+        for (int i = 0; i < inversedMatrix.getRows(); i++) {
+            for (int j = 0; j < inversedMatrix.getCols(); j++) {
+
+                assertEquals(inversedMatrix.getElement(i, j), expectedMatrix.getElement(i, j), 1e-9);
+
+            }
+        }
+    }
+
+
 }

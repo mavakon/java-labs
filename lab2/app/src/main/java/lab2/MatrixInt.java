@@ -12,4 +12,5 @@ public interface MatrixInt {
     MatrixInt multiply(double multiplier);
     MatrixInt multiply(MatrixInt matrix);
     MatrixInt transpose();
+    MatrixInt inverse();
 }

@@ -198,4 +198,8 @@ public final class ImmutableMatrix implements MatrixInt {
         return new ImmutableMatrix(Matrix.makeRandomColumnMatrix(size, lowerLimit, upperLimit));
     }
 
+    public ImmutableMatrix inverse() {
+        return new ImmutableMatrix((new Matrix(this)).inverse());
+    }
+
 }

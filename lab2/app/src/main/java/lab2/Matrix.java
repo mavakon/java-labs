@@ -236,5 +236,62 @@ public class Matrix implements MatrixInt {
         return randomRowMatrix;
     }
 
+    // Початкова перевірка перед підрахунком детермінанта
+    public double determinant() {
+        if (this.rows != this.cols) {
+            throw new IllegalStateException("Детермінант може бути вирахуваним лише якщо матриця квадратна");
+        }
+        return determinant(this.data);
+    }
+
+    // Обчислення детермінанта матриці
+    public static double determinant(double[][] matrixData) {
+        double result = 0;
+        if (matrixData.length == 1) {
+            result = matrixData[0][0];
+        } else if (matrixData.length == 2) {
+            result = matrixData[0][0] * matrixData[1][1] - matrixData[0][1] * matrixData[1][0];
+        } else {
+            for (int i = 0; i < matrixData[0].length; i++) {
+                double[][] minor = getMinor(matrixData, 0, i);
+                result += matrixData[0][i] * Math.pow(-1, i) * determinant(minor);
+            }
+        }
+        return result;
+    }
+
+    // Отримання мінору за рядком і стовпчиком
+    private static double[][] getMinor(double[][] matrixData, int row, int column) {
+        double[][] minor = new double[matrixData.length - 1][matrixData.length - 1];
+        for (int i = 0; i < matrixData.length; i++) {
+            for (int j = 0; i != row && j < matrixData[i].length; j++) {
+                if (j != column) {
+                    minor[i < row ? i : i - 1][j < column ? j : j - 1] = matrixData[i][j];
+                }
+            }
+        }
+        return minor;
+    }
+
+    // Отримання оберненої матриці
+    public Matrix inverse() {
+        double det = determinant();
+        if (Math.abs(det) < 1e-9) {
+            throw new ArithmeticException("Матриця вироджена і не може бути обернена.");
+        }
+
+        // Заповнення приєднаної матриці
+        double[][] adjugate = new double[this.rows][this.cols];
+
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                adjugate[j][i] = Math.pow(-1, i + j) * determinant(getMinor(this.data, i, j));
+            }
+        }
+
+        Matrix inverseMatrix = new Matrix(adjugate);
+        return inverseMatrix.multiply(1/det);
+    }
+
 }
 
