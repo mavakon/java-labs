@@ -64,9 +64,9 @@ public class Matrix implements MatrixInt {
     }
 
     // Встановлення значення елемента за індексом
-    public void setElement(int row, int col, double value) {
-        if (row >= 0 && row < rows && col >= 0 && col < cols) {
-            data[row][col] = value;
+    public void setElement(int rowIndex, int colIndex, double value) {
+        if (rowIndex >= 0 && rowIndex < rows && colIndex >= 0 && colIndex < cols) {
+            data[rowIndex][colIndex] = value;
         } else {
             throw new IndexOutOfBoundsException("Індекс виходить за розмірність матриці");
         }
@@ -142,14 +142,19 @@ public class Matrix implements MatrixInt {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Matrix matrix = (Matrix) o;
-        return rows == matrix.rows && cols == matrix.cols && Arrays.deepEquals(data, matrix.data);
+
+        if (getRows() != matrix.getRows()) return false;
+        if (getCols() != matrix.getCols()) return false;
+        return Arrays.deepEquals(getData(), matrix.getData());
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(rows, cols);
-        result = (69 * result) + Arrays.deepHashCode(data);
+        int result = getRows();
+        result = 31 * result + getCols();
+        result = 31 * result + Arrays.deepHashCode(getData());
         return result;
     }
 
@@ -291,6 +296,20 @@ public class Matrix implements MatrixInt {
 
         Matrix inverseMatrix = new Matrix(adjugate);
         return inverseMatrix.multiply(1/det);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (double[] row : data) {
+            sb.append("[");
+            for (double v : row) {
+                sb.append(String.format("%9.4f", v));
+                sb.append(" ");
+            }
+            sb.append("  ]\n");
+        }
+        return sb.toString();
     }
 
 }

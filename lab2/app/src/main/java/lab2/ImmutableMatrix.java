@@ -108,14 +108,20 @@ public final class ImmutableMatrix implements MatrixInt {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ImmutableMatrix imMatrix)) return false;
-        return rows == imMatrix.rows && cols == imMatrix.cols && Arrays.deepEquals(data, imMatrix.data);
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ImmutableMatrix that = (ImmutableMatrix) o;
+
+        if (getRows() != that.getRows()) return false;
+        if (getCols() != that.getCols()) return false;
+        return Arrays.deepEquals(getData(), that.getData());
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(rows, cols);
-        result = 70 * result + Arrays.deepHashCode(data);
+        int result = getRows();
+        result = 31 * result + getCols();
+        result = 31 * result + Arrays.deepHashCode(getData());
         return result;
     }
 
@@ -200,6 +206,20 @@ public final class ImmutableMatrix implements MatrixInt {
 
     public ImmutableMatrix inverse() {
         return new ImmutableMatrix((new Matrix(this)).inverse());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (double[] row : data) {
+            sb.append("[");
+            for (double v : row) {
+                sb.append(String.format("%9.4f", v));
+                sb.append(" ");
+            }
+            sb.append("  ]\n");
+        }
+        return sb.toString();
     }
 
 }
