@@ -230,5 +230,11 @@ public class Matrix implements MatrixInt {
         return randomRowMatrix;
     }
 
+    public static Matrix makeRandomColumnMatrix(int size, double lowerLimit, double upperLimit) {
+        Matrix randomRowMatrix = new Matrix(size, 1);
+        randomRowMatrix.fillRandom(lowerLimit, upperLimit);
+        return randomRowMatrix;
+    }
+
 }
 

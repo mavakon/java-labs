@@ -193,4 +193,9 @@ public final class ImmutableMatrix implements MatrixInt {
     public static ImmutableMatrix makeRandomRowMatrix(int size, double lowerLimit, double upperLimit) {
         return new ImmutableMatrix(Matrix.makeRandomRowMatrix(size, lowerLimit, upperLimit));
     }
+
+    public static ImmutableMatrix makeRandomColumnMatrix(int size, double lowerLimit, double upperLimit) {
+        return new ImmutableMatrix(Matrix.makeRandomColumnMatrix(size, lowerLimit, upperLimit));
+    }
+
 }

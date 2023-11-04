@@ -370,4 +370,30 @@ class MatrixTest {
 
     }
 
+    @Test
+    void testMakeRandomColumnMatrix() {
+        Matrix randomColumnMatrix = Matrix.makeRandomColumnMatrix(5, -10, 10);
+
+        assertEquals(1, randomColumnMatrix.getCols());
+        assertEquals(5, randomColumnMatrix.getRows());
+
+        for (int i = 0; i < 5; i++) {
+            assertTrue(randomColumnMatrix.getElement(i, 0) >= -10 && randomColumnMatrix.getElement(i, 0) <= 10);
+        }
+
+    }
+
+    @Test
+    void testImmutableMakeRandomColumnMatrix() {
+        ImmutableMatrix randomColumnMatrix = ImmutableMatrix.makeRandomColumnMatrix(5, -10.0, 10.0);
+
+        assertEquals(1, randomColumnMatrix.getCols());
+        assertEquals(5, randomColumnMatrix.getRows());
+
+        for (int i = 0; i < 5; i++) {
+            assertTrue(randomColumnMatrix.getElement(i, 0) >= -10.0 && randomColumnMatrix.getElement(i, 0) <= 10.0);
+        }
+
+    }
+
 }
