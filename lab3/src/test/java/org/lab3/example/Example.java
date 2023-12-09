@@ -1,9 +1,10 @@
 package org.lab3.example;
 
-import org.lab3.Container;
-import org.lab3.Environment;
 import org.junit.Before;
 import org.junit.Test;
+import org.lab3.Container;
+import org.lab3.Environment;
+import org.lab3.EnvironmentImpl;
 
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
@@ -14,7 +15,7 @@ public class Example {
 
     @Before
     public void setUp() {
-        Environment env = new DummyEnvironment();
+        Environment env = new EnvironmentImpl();
         container = env.configure(new MyConfiguration());
     }
 
@@ -30,10 +31,7 @@ public class Example {
 
     @Test
     public void shouldBuildInjectionGraph() {
-        /*
-        binder.bind(A.class, B.class);
-        binder.bind(B.class, new B());
-        */
+
         final B bAsSingleton = container.getComponent(B.class);
         assertSame(container.getComponent(A.class), bAsSingleton);
         assertSame(container.getComponent(B.class), bAsSingleton);
